@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Jurnal</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #b3e0f2; }
+        .container { max-width: 600px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px; }
+        .nav { margin-bottom: 20px; }
+        .nav a { margin: 0 10px; text-decoration: none; color: #007bff; }
+        .journal-entry { border-bottom: 1px solid #ccc; padding: 10px; text-align: left; }
+        .journal-entry h3 { margin: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Riwayat Jurnal</h1>
+        <div class="nav">
+            <a href="index.html">Isi Jurnal</a>
+            <a href="history.html">Lihat Jurnal</a>
+        </div>
+
+        <div id="journalHistory"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const journalHistoryDiv = document.getElementById("journalHistory");
+            let entries = [];
+
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                if (key.startsWith("journal_")) {
+                    entries.push(JSON.parse(localStorage.getItem(key)));
+                }
+            }
+
+            entries.sort((a, b) => new Date(b.date) - new Date(a.date));
+            displayJournals(entries);
+        });
+
+        function displayJournals(entries) {
+            const journalHistoryDiv = document.getElementById("journalHistory");
+            journalHistoryDiv.innerHTML = "";
+
+            if (entries.length === 0) {
+                journalHistoryDiv.innerHTML = "<p>Belum ada jurnal yang tersimpan.</p>";
+            } else {
+                entries.forEach(entry => {
+                    let entryDiv = document.createElement("div");
+                    entryDiv.classList.add("journal-entry");
+                    entryDiv.innerHTML = `
+                        <h3>${entry.date}</h3>
+                        <p><strong>Tantangan:</strong> ${entry.difficulty}</p>
+                        <p><strong>Perasaan:</strong> ${entry.emotion}</p>
+                        <p><strong>Hal yang disyukuri:</strong> ${entry.gratitude}</p>
+                        <p><strong>Kata positif:</strong> ${entry.positiveWord}</p>
+                    `;
+                    journalHistoryDiv.appendChild(entryDiv);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

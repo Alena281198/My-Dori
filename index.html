@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal Harian</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #b3e0f2; }
+        .container { max-width: 600px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px; }
+        .nav { margin-bottom: 20px; }
+        .nav a { margin: 0 10px; text-decoration: none; color: #007bff; }
+        .question { margin-bottom: 10px; }
+        .growth-image { width: 100px; display: block; margin: auto; }
+        button { margin-top: 10px; padding: 10px; border: none; background-color: #007bff; color: white; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Jurnal Harian</h1>
+        <div class="nav">
+            <a href="index.html">Isi Jurnal</a>
+            <a href="history.html">Lihat Jurnal</a>
+        </div>
+
+        <div class="question">
+            <label>Apa tantangan hari ini?</label>
+            <input type="text" id="difficulty">
+        </div>
+
+        <div class="question">
+            <label>Bagaimana cara mengatasinya?</label>
+            <input type="text" id="solution">
+        </div>
+
+        <div class="question">
+            <label>Bagaimana perasaanmu?</label>
+            <select id="emotion">
+                <option value="Menangis">😢 Menangis</option>
+                <option value="Sedih">😔 Sedih</option>
+                <option value="Kecewa">😞 Kecewa</option>
+                <option value="Marah">😠 Marah</option>
+                <option value="Biasa saja">😐 Biasa Saja</option>
+                <option value="Senang">😊 Senang</option>
+                <option value="Bahagia">😄 Bahagia</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label>Sebutkan 3 hal yang kamu syukuri:</label>
+            <input type="text" id="gratitude">
+        </div>
+
+        <div class="question">
+            <label>Satu kata positif untuk besok:</label>
+            <input type="text" id="positiveWord">
+        </div>
+
+        <button onclick="saveJournal()">Simpan</button>
+        <img class="growth-image" id="fishImage" src="fish1.png" alt="Ikan Peliharaan">
+
+    </div>
+
+    <script>
+        function saveJournal() {
+            let date = new Date().toISOString().split('T')[0];
+            let journal = {
+                date: date,
+                difficulty: document.getElementById("difficulty").value,
+                solution: document.getElementById("solution").value,
+                emotion: document.getElementById("emotion").value,
+                gratitude: document.getElementById("gratitude").value,
+                positiveWord: document.getElementById("positiveWord").value
+            };
+            localStorage.setItem("journal_" + date, JSON.stringify(journal));
+            alert("Jurnal tersimpan!");
+            document.getElementById("fishImage").src = "fish2.png";
+        }
+    </script>
+</body>
+</html>
